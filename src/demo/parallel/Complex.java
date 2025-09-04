@@ -30,7 +30,6 @@
  */
 package demo.parallel;
 
-
 /**
  * A complex number is a number that can be expressed in the form a + b * i, where
  * a and b are real numbers and i is the imaginary unit, which satisfies the
@@ -45,15 +44,15 @@ package demo.parallel;
  * @author Alexander Kouznetsov, Tristan Yan
  */
 public class Complex {
-    
-    private double re;   // the real part
-    private double im;   // the imaginary part
 
-    /** 
+    public double re;
+    public double im;
+
+    /**
      * create a new object with the given real and imaginary parts
-     * 
+     *
      * @param real a complex number real part
-     * @param imag a complex number imaginary part 
+     * @param imag a complex number imaginary part
      */
     public Complex(double real, double imag) {
         re = real;
@@ -86,10 +85,52 @@ public class Complex {
     }
 
     /**
-     * Square of Complex object's length, we're using square of length to 
+     * Division operation.
+     * @param b divisor
+     * @return this Complex object whose value is this / b
+     * @throws ArithmeticException if divisor is zero
+     */
+    public Complex divide(Complex b) {
+        Complex a = this;
+        double denominator = b.re * b.re + b.im * b.im;
+        if (denominator == 0) {
+            throw new ArithmeticException("Division by zero");
+        }
+        double real = (a.re * b.re + a.im * b.im) / denominator;
+        double imag = (a.im * b.re - a.re * b.im) / denominator;
+        re = real;
+        im = imag;
+        return this;
+    }
+
+    /**
+     * Power operation (integer exponent).
+     * @param n the exponent
+     * @return this Complex object whose value is this raised to the power n
+     */
+    public Complex power(int n) {
+        Complex result = new Complex(1, 0); // Identity for multiplication
+        Complex base = new Complex(this.re, this.im); // Copy of this
+        int absN = Math.abs(n);
+
+        for (int i = 0; i < absN; i++) {
+            result.times(base);
+        }
+
+        if (n < 0) {
+            result = new Complex(1, 0).divide(result); // 1/result for negative powers
+        }
+
+        this.re = result.re;
+        this.im = result.im;
+        return this;
+    }
+
+    /**
+     * Square of Complex object's length, we're using square of length to
      * eliminate the computation of square root
      * @return square of length
-    */
+     */
     public double lengthSQ() {
         return re * re + im * im;
     }
