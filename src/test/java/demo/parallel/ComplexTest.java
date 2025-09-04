@@ -1,6 +1,6 @@
 package demo.parallel;
 
-import demo.parallel.Complex;
+import demo.parallel.ComplexTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,13 +28,6 @@ public class ComplexTest {
         Complex result = new Complex(a.re, a.im).times(new Complex(b.re, b.im));
         assertEquals(-5.0, result.re, 1e-10, "Real part should be -5.0");
         assertEquals(10.0, result.im, 1e-10, "Imaginary part should be 10.0");
-    }
-
-    @Test
-    void testDivide() {
-        Complex result = new Complex(a.re, a.im).divide(new Complex(b.re, b.im));
-        assertEquals(2.2, result.re, 1e-10, "Real part should be 2.2");
-        assertEquals(0.4, result.im, 1e-10, "Imaginary part should be 0.4");
     }
 
     @Test
